@@ -644,6 +644,10 @@ def server(host=RESTAPI_DEFAULT_ADDRESS, port=RESTAPI_DEFAULT_PORT, adapter=REST
     """
     DataStore.admin_id = hexencode(os.urandom(16))
     Database.filepath = tempfile.mkstemp(prefix="sqlmapipc-", text=False)[1]
+    #make adminid to known this is safe because api only avalible to local
+    file_object = open('/www/xseclab.com/termite/.sqlmapadminid', 'w')
+    file_object.write(DataStore.admin_id)
+    file_object.close( )
 
     logger.info("Running REST-JSON API server at '%s:%d'.." % (host, port))
     logger.info("Admin ID: %s" % DataStore.admin_id)
